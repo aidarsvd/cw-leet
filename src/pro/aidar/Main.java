@@ -1,0 +1,111 @@
+package pro.aidar;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println(longest("loopingisfunbutdangerous", "lessdangerousthancoding"));
+    }
+
+    public static String longest (String s1, String s2) {
+        String s3 = s1 + s2;
+        ArrayList<Character> list1 = new ArrayList<>();
+        for (int i = 0; i < s3.length(); i++){
+            if (i > 0){
+                if (!list1.contains(s3.charAt(i))){
+                    list1.add(s3.charAt(i));
+                }
+            }else{
+                list1.add(s3.charAt(i));
+            }
+        }
+        Collections.sort(list1);
+        return list1.stream().map(String::valueOf).collect(Collectors.joining(""));
+    }
+
+    public static int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        int ans = 0, i = 0, j = 0;
+        while (i < n && j < n) {
+            if (!set.contains(s.charAt(j))){
+                set.add(s.charAt(j++));
+                ans = Math.max(ans, j - i);
+            }
+            else {
+                set.remove(s.charAt(i++));
+            }
+        }
+        return ans;
+    }
+
+    public static String getMiddle(String word) {
+        char[] ch = word.toCharArray();
+        String letter;
+        if (ch.length % 2 != 0){
+            letter = String.valueOf(ch[ch.length/2]);
+        }else{
+            char f;
+            char s;
+            f = ch[ch.length/2 - 1];
+            s = ch[ch.length/2];
+            letter = f + String.valueOf(s);
+        }
+        return letter;
+    }
+
+    public static char findMissingLetter(char[] array)
+    {
+        String abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        char[] list = abc.toCharArray();
+        char[] rangeArray = new char[array.length];
+        for(int i = 0; i < list.length; i++){
+            if (Character.toUpperCase(array[0]) == Character.toUpperCase(list[i])){
+                for (int j = 0; j < array.length; j ++ ){
+                    rangeArray[j] = list[i];
+                    i ++;
+                }
+            }
+        }
+        for (int i = 0; i < rangeArray.length; i ++){
+            if (Character.toUpperCase(array[i]) != Character.toUpperCase(rangeArray[i])){
+                return Character.isLowerCase(array[0]) ?
+                        Character.toLowerCase(rangeArray[i]) : Character.toUpperCase(rangeArray[i]);
+            }
+        }
+        return ' ';
+    }
+
+    public static int ConvertBinaryArrayToInt(List<Integer> binary) {
+        String result = binary.stream().map(String::valueOf).collect(Collectors.joining(""));
+        return Integer.parseInt(result, 2);
+    }
+
+    public static int persistence(long n) {
+        int itteration = 0;
+        String a = Long.toString(n);
+        int[] list = new int[a.length()];
+        for (int i =0; i < list.length; i ++){
+            list[i] = a.charAt(i) - '0';
+        }
+        int result=1;
+        while (list.length > 1){
+            itteration += 1;
+            for(int value : list) {
+                result *= value;
+            }
+            String temp = Integer.toString(result);
+            result = 1;
+            list = new int[temp.length()];
+            for (int i =0; i < list.length; i ++){
+                list[i] = temp.charAt(i) - '0';
+            }
+        }
+        return itteration;
+    }
+
+
+
+}
