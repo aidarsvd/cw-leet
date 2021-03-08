@@ -6,8 +6,49 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(longest("loopingisfunbutdangerous", "lessdangerousthancoding"));
+        System.out.println(scramble("katas", "steak"));
     }
+
+    public static boolean scramble(String str1, String str2) {
+        ArrayList<Character> list = new ArrayList<>();
+        ArrayList<Character> list2 = new ArrayList<>();
+        Map<Character, Integer> counts = new HashMap<Character, Integer>();
+        Map<Character, Integer> counts2 = new HashMap<Character, Integer>();
+        for (int j = 0; j < str1.length(); j ++){
+            list.add(str1.charAt(j));
+        }
+        for (int j = 0; j < str2.length(); j ++){
+            list2.add(str2.charAt(j));
+        }
+        int res = 0;
+        for (char word : list) {
+            Integer current = counts.get(word);
+            if (current == null) {
+                current = 0;
+            }
+            current++;
+            counts.put(word, current);
+        }
+        for (char word : list2) {
+            Integer current = counts2.get(word);
+            if (current == null) {
+                current = 0;
+            }
+            current++;
+            counts2.put(word, current);
+        }
+        for (int j=0; j < str2.length();j++){
+            Integer temp = counts2.get(list2.get(j));
+            Integer temp2 = counts.get(list2.get(j));
+            if (temp2 != null && temp != null){
+                if (temp2 >= temp){
+                    res++;
+                }
+            }
+        }
+        return res == str2.length();
+    }
+
 
     public static String longest (String s1, String s2) {
         String s3 = s1 + s2;
