@@ -1,12 +1,44 @@
 package pro.aidar;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(scramble("katas", "steak"));
+        System.out.println(digital_root(456));
+
+
+    }
+
+    public static int digital_root(int n) {
+        String a = String.valueOf(n);
+        int[] list = new int[a.length()];
+        for (int i =0; i < list.length; i ++){
+            list[i] = a.charAt(i) - '0';
+        }
+        int result=0;
+        while (list.length > 1){
+            for(int value : list) {
+                result += value;
+            }
+            String temp = Integer.toString(result);
+            if (result >= 10){
+                result = 0;
+            }else{
+                break;
+            }
+            list = new int[temp.length()];
+            for (int i =0; i < list.length; i ++){
+                list[i] = temp.charAt(i) - '0';
+            }
+        }
+        return result;
+    }
+
+    public static String longToIP(long ip) {
+        return String.format("%d.%d.%d.%d", ip>>>24, (ip>>16)&0xff, (ip>>8)&0xff, ip&0xff);
     }
 
     public static boolean scramble(String str1, String str2) {
