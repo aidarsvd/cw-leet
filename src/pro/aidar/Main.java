@@ -7,9 +7,31 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(digital_root(456));
+        System.out.println(duplicateCount("inivisibility"));
+    }
 
-
+    public static int duplicateCount(String text) {
+        Map<Character, Integer> counts = new HashMap<Character, Integer>();
+        ArrayList<Character> list = new ArrayList<>();
+        for (int j = 0; j < text.length(); j ++){
+            list.add(Character.toLowerCase(text.charAt(j)));
+        }
+        for (char word : list) {
+            Integer current = counts.get(word);
+            if (current == null) {
+                current = 0;
+            }
+            current++;
+            counts.put(word, current);
+        }
+        int res = 0;
+        for(Map.Entry<Character, Integer> entry : counts.entrySet()) {
+            Integer value = entry.getValue();
+            if (value > 1){
+                res++;
+            }
+        }
+        return res;
     }
 
     public static int digital_root(int n) {
